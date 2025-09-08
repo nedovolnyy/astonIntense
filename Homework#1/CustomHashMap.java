@@ -28,7 +28,7 @@ class CustomHashMap<K, V> {
         var node = table[getIndex(key)];
         while (node != null) {
             if (node.hash == hash(key) &&
-                    (node.key == key || (key != null && key.equals(node.key))))
+                    (node.key == key || (key != null) && Objects.equals(key, node.key)))
                 return node.value;
             node = node.next;
         }
@@ -46,6 +46,7 @@ class CustomHashMap<K, V> {
             return;
         }
 
+        // Если ключи совпадают, но разные значения - перезапись без увеличения size
         if (get(key) != null) {
             table[index] = new Node<>(hash(key), key, value, table[index]);
             return;
