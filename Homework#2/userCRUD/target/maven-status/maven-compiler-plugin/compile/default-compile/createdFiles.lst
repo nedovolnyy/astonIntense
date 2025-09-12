@@ -1,0 +1,12 @@
+entities\BaseEntity.class
+services\BaseService.class
+services\UserServiceImpl.class
+services\BaseServiceImpl.class
+UserCRUD.class
+dtos\UserDto.class
+mappers\UserMapper.class
+repositories\BaseDao.class
+utils\HibernateUtil.class
+repositories\UserDaoImpl.class
+entities\User.class
+repositories\BaseDaoImpl.class

@@ -1,0 +1,12 @@
+D:\Education\Java\Temp\Homework#2\userCRUD\src\main\java\dtos\UserDto.java
+D:\Education\Java\Temp\Homework#2\userCRUD\src\main\java\entities\BaseEntity.java
+D:\Education\Java\Temp\Homework#2\userCRUD\src\main\java\entities\User.java
+D:\Education\Java\Temp\Homework#2\userCRUD\src\main\java\mappers\UserMapper.java
+D:\Education\Java\Temp\Homework#2\userCRUD\src\main\java\repositories\BaseDao.java
+D:\Education\Java\Temp\Homework#2\userCRUD\src\main\java\repositories\BaseDaoImpl.java
+D:\Education\Java\Temp\Homework#2\userCRUD\src\main\java\repositories\UserDaoImpl.java
+D:\Education\Java\Temp\Homework#2\userCRUD\src\main\java\services\BaseService.java
+D:\Education\Java\Temp\Homework#2\userCRUD\src\main\java\services\BaseServiceImpl.java
+D:\Education\Java\Temp\Homework#2\userCRUD\src\main\java\services\UserServiceImpl.java
+D:\Education\Java\Temp\Homework#2\userCRUD\src\main\java\UserCRUD.java
+D:\Education\Java\Temp\Homework#2\userCRUD\src\main\java\utils\HibernateUtil.java
