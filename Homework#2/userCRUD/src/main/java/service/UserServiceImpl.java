@@ -5,7 +5,7 @@
 package service;
 
 import model.User;
-import repository.UserDaoImpl;
+import repository.UserDao;
 
 /**
  *
@@ -13,7 +13,7 @@ import repository.UserDaoImpl;
  */
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
 
-    public UserServiceImpl(UserDaoImpl userDao) {
+    public UserServiceImpl(UserDao userDao) {
         super(userDao);
     }
 

@@ -1,0 +1,25 @@
+# NetBeans specific
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+nbactions.xml
+nb-configuration.xml
+
+# Maven specific
+target/
+.classpath
+.project
+.settings/
+
+# Java specific
+*.class
+*.jar
+*.war
+*.ear
+
+# Other common ignore patterns
+*.log
+*.bak
+*~
+logs

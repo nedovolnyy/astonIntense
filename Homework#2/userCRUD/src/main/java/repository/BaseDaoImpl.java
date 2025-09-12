@@ -4,15 +4,16 @@
  */
 package repository;
 
-import model.BaseEntity;
+import jakarta.transaction.Transactional;
 import java.lang.reflect.ParameterizedType;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
-import utils.HibernateUtil;
 import lombok.AllArgsConstructor;
+import model.BaseEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import utils.HibernateUtil;
 
 /**
  *
@@ -50,6 +51,7 @@ public class BaseDaoImpl<T extends BaseEntity> implements BaseDao<T> {
     }
 
     @Override
+    @Transactional
     public void insert(T entity) throws SQLException {
         var transaction = session.getTransaction();
         transaction.begin();
@@ -58,6 +60,7 @@ public class BaseDaoImpl<T extends BaseEntity> implements BaseDao<T> {
     }
 
     @Override
+    @Transactional
     public void update(T entity) throws SQLException {
         var transaction = session.getTransaction();
         transaction.begin();
@@ -66,6 +69,7 @@ public class BaseDaoImpl<T extends BaseEntity> implements BaseDao<T> {
     }
 
     @Override
+    @Transactional
     public void delete(T entity) throws SQLException {
         var transaction = session.getTransaction();
         transaction.begin();
