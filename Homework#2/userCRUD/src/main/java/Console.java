@@ -2,7 +2,7 @@
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Scanner;
-import model.Operation;
+import utils.enums.Operation;
 import model.User;
 import repository.*;
 import service.*;
@@ -89,7 +89,6 @@ public class Console {
         System.out.println("Enter user id:");
         var input = scanner.nextLine();
         var user = userService.getById(parseInt(input));
-
         System.out.println("\tUser:");
         System.out.println(user.toString());
     }
@@ -128,12 +127,7 @@ public class Console {
         if (isNewUser) {
             return user;
         }
-        var oldUser = userService.getById(id);
-        if (oldUser == null) {
-            return null;
-        }
         user.setId(id);
-        user.setCreatedAt(oldUser.getCreatedAt());
         return user;
     }
 

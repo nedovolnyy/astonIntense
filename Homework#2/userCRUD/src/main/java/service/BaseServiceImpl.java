@@ -9,6 +9,7 @@ import model.BaseEntity;
 import lombok.AllArgsConstructor;
 import java.util.List;
 import repository.BaseDao;
+import utils.enums.Operation;
 
 /**
  *
@@ -20,28 +21,27 @@ public class BaseServiceImpl<T extends BaseEntity> implements BaseService<T> {
 
     private final BaseDao<T> baseDao;
 
-    @Override
     public T getById(int id) throws SQLException, ClassNotFoundException {
         return baseDao.getById(id);
     }
 
-    @Override
+    public T getById(String id) throws SQLException, ClassNotFoundException {
+        return baseDao.getById(id);
+    }
+
     public List<T> getAll() throws SQLException, ClassNotFoundException {
         return baseDao.getAll();
     }
 
-    @Override
-    public void insert(T entity) throws SQLException {
-        baseDao.insert(entity);
+    public Operation insert(T entity) throws SQLException {
+        return baseDao.insert(entity);
     }
 
-    @Override
-    public void update(T entity) throws SQLException {
-        baseDao.update(entity);
+    public Operation update(T entity) throws SQLException {
+        return baseDao.update(entity);
     }
 
-    @Override
-    public void delete(T entity) throws SQLException {
-        baseDao.delete(entity);
+    public Operation delete(T entity) throws SQLException {
+        return baseDao.delete(entity);
     }
 }

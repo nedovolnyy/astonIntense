@@ -21,7 +21,7 @@ import javax.print.attribute.standard.DateTimeAtCompleted;
 @NoArgsConstructor
 @Setter
 @Table(name = "`user`")
-public class User extends BaseEntity {
+public class User extends BaseIdEntity {
 
     private String name;
     private String email;

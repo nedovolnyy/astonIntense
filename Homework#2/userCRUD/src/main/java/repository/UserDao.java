@@ -11,5 +11,5 @@ import model.User;
  * @author AKrot
  */
 public interface UserDao extends BaseDao<User> {
-    
+
 }

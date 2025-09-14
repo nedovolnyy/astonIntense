@@ -7,6 +7,7 @@ package repository;
 import java.sql.SQLException;
 import model.BaseEntity;
 import java.util.List;
+import utils.enums.Operation;
 
 /**
  *
@@ -17,12 +18,14 @@ public interface BaseDao<T extends BaseEntity> {
 
     T getById(int id) throws SQLException, ClassNotFoundException;
 
+    T getById(String id) throws SQLException, ClassNotFoundException;
+
     List<T> getAll() throws SQLException, ClassNotFoundException;
 
-    void insert(T entity) throws SQLException;
+    Operation insert(T entity) throws SQLException;
 
-    void update(T entity) throws SQLException;
+    Operation update(T entity) throws SQLException;
 
-    void delete(T entity) throws SQLException;
-    
+    Operation delete(T entity) throws SQLException;
+
 }
