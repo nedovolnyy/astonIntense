@@ -59,7 +59,7 @@ public class Console {
         System.out.println("Lastname Firstname Patronymic, email, age");
         var input = scanner.nextLine();
         var newUser = parseUser("0, " + input, true);
-        userService.insert(newUser);
+        var op = userService.insert(newUser);
     }
 
     private void update() throws SQLException, ClassNotFoundException {

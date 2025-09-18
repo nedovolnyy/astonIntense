@@ -5,9 +5,9 @@
 package service;
 
 import java.sql.SQLException;
-import model.BaseEntity;
-import lombok.AllArgsConstructor;
 import java.util.List;
+import lombok.AllArgsConstructor;
+import model.BaseEntity;
 import repository.BaseDao;
 import utils.enums.Operation;
 

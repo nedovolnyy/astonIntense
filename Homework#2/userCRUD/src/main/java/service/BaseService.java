@@ -5,8 +5,8 @@
 package service;
 
 import java.sql.SQLException;
-import model.BaseEntity;
 import java.util.List;
+import model.BaseEntity;
 import utils.enums.Operation;
 
 /**

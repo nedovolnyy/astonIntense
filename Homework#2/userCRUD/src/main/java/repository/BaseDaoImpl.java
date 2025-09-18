@@ -37,7 +37,7 @@ public class BaseDaoImpl<T extends BaseEntity> implements BaseDao<T> {
             return (T) session.getReference(classT, id);
         }
     }
-    
+
     public T getById(String uuid) throws SQLException, ClassNotFoundException {
         try (var session = sessionFactory.openSession()) {
             var className = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0].getTypeName();
@@ -83,17 +83,19 @@ public class BaseDaoImpl<T extends BaseEntity> implements BaseDao<T> {
             switch (operationCode) {
                 case INSERT:
                     session.persist(entity);
+                    transaction.commit();
                     return Operation.INSERT;
                 case UPDATE:
                     session.merge(entity);
+                    transaction.commit();
                     return Operation.UPDATE;
                 case DELETE:
                     session.remove(entity);
+                    transaction.commit();
                     return Operation.DELETE;
                 default: {
                 }
             }
-            transaction.commit();
         } catch (Exception e) {
             if (transaction != null && transaction.getRollbackOnly()) {
                 transaction.rollback();
