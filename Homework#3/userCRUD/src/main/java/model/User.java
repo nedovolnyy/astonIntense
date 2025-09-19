@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
  *
  * @author AKrot
  */
-@AllArgsConstructor
 @Entity
 @EqualsAndHashCode
 @Getter
@@ -26,14 +25,13 @@ import java.time.LocalDateTime;
 @Table(name = "`user`")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String name;
     private String email;
     private int age;
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    private int id;
-    
+
     @Column(name = "created_at", columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT now()")
     private LocalDateTime createdAt = LocalDateTime.now();
 
@@ -41,6 +39,11 @@ public class User {
         this.name = name;
         this.email = email;
         this.age = age;
+    }
+
+    public User(String name, String email, int age, LocalDateTime createdAt) {
+        this(name, email, age);
+        this.createdAt = createdAt;
     }
 
     @Override

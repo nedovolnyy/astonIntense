@@ -20,11 +20,11 @@ public class UserServiceImpl implements UserService{
 
     private final UserDao userDao;
 
-    public User getById(int id) throws SQLException, ClassNotFoundException {
+    public User getById(Integer id) throws SQLException {
         return userDao.getById(id);
     }
 
-    public List<User> getAll() throws SQLException, ClassNotFoundException {
+    public List<User> getAll() throws SQLException {
         return userDao.getAll();
     }
 

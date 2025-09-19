@@ -27,13 +27,13 @@ public class UserDaoImpl implements UserDao {
         sessionFactory = HibernateUtil.getSessionFactory();
     }
 
-    public User getById(int id) throws SQLException, ClassNotFoundException {
+    public User getById(Integer id) throws SQLException {
         try (var session = sessionFactory.openSession()) {
-            return (User) session.getReference(User.class, id);
+            return (User) session.find(User.class, id);
         }
     }
 
-    public List<User> getAll() throws SQLException, ClassNotFoundException {
+    public List<User> getAll() throws SQLException {
         try (var session = sessionFactory.openSession()) {
             var query = session.createQuery("from User", User.class);
             final List<User> tempListT = new LinkedList<>();
@@ -56,13 +56,14 @@ public class UserDaoImpl implements UserDao {
         return choiceMethod(Operation.DELETE, user);
     }
 
-    public Operation choiceMethod(Operation operationCode, User user) throws SQLException {
+    private Operation choiceMethod(Operation operationCode, User user) throws SQLException {
         Transaction transaction = null;
         try (var session = sessionFactory.openSession()) {
             transaction = session.getTransaction();
             transaction.begin();
             switch (operationCode) {
                 case INSERT:
+                    user.setId(null);
                     session.persist(user);
                     transaction.commit();
                     return Operation.INSERT;

@@ -15,9 +15,9 @@ import utils.enums.Operation;
  */
 public interface UserService {
 
-    User getById(int id) throws SQLException, ClassNotFoundException;
+    User getById(Integer id) throws SQLException;
 
-    List<User> getAll() throws SQLException, ClassNotFoundException;
+    List<User> getAll() throws SQLException;
 
     Operation insert(User user) throws SQLException;
 
