@@ -16,7 +16,7 @@ import utils.enums.Operation;
  */
 public interface BaseDao<T extends BaseEntity> {
 
-    T getById(int id) throws SQLException, ClassNotFoundException;
+    T getById(Integer id) throws SQLException, ClassNotFoundException;
 
     T getById(String id) throws SQLException, ClassNotFoundException;
 

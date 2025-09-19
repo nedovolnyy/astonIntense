@@ -21,6 +21,6 @@ import lombok.Setter;
 public class BaseUuidEntity extends BaseEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 }

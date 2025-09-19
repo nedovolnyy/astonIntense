@@ -29,7 +29,7 @@ public class BaseDaoImpl<T extends BaseEntity> implements BaseDao<T> {
         sessionFactory = HibernateUtil.getSessionFactory();
     }
 
-    public T getById(int id) throws SQLException, ClassNotFoundException {
+    public T getById(Integer id) throws SQLException, ClassNotFoundException {
         try (var session = sessionFactory.openSession()) {
             var className = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0].getTypeName();
             var classT = Class.forName(className);

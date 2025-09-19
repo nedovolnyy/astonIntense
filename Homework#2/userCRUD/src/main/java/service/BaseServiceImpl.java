@@ -21,7 +21,7 @@ public class BaseServiceImpl<T extends BaseEntity> implements BaseService<T> {
 
     private final BaseDao<T> baseDao;
 
-    public T getById(int id) throws SQLException, ClassNotFoundException {
+    public T getById(Integer id) throws SQLException, ClassNotFoundException {
         return baseDao.getById(id);
     }
 
