@@ -18,7 +18,8 @@ import lombok.*;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "pk_sequence", sequenceName = "user_id_seq", allocationSize = 1, initialValue = 4)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
     private Integer id;
     private String name;
     private String email;
@@ -26,6 +27,9 @@ public class User {
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT now()")
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    public User() {
+    }
 
     public User(String name, String email, int age) {
         this.name = name;
