@@ -1,9 +1,9 @@
 package IntegrationTests.controller;
 
-import com.UserApplication;
-import com.dto.UserDto;
-import com.entity.User;
-import com.repository.UserRepository;
+import com.userservice.UserApplication;
+import com.userservice.dto.UserDto;
+import com.userservice.entity.User;
+import com.userservice.repository.UserRepository;
 import java.sql.DriverManager;
 
 import org.junit.jupiter.api.Test;
@@ -44,7 +44,7 @@ public class UserControllerTest {
     int localServerPort;
 
     @Autowired
-    private WebTestClient webTestClient = WebTestClient.bindToServer()
+    private final WebTestClient webTestClient = WebTestClient.bindToServer()
             .baseUrl("http://localhost:" + localServerPort).build();
 
     @ClassRule
@@ -57,12 +57,12 @@ public class UserControllerTest {
     @Autowired
     private UserRepository userRepository;
 
-    public final List<User> testUserList = List.of(
+    public final List<User> TEST_USERSLIST = List.of(
             new User(1, "Ивцев Иоан Казимирович", "ivy@dmail.su", 47, LocalDateTime.now().truncatedTo(ChronoUnit.MICROS)),
             new User(2, "Второй Иоан Казимирович", "ivy2@dmail.su", 42, LocalDateTime.now().truncatedTo(ChronoUnit.MICROS)),
             new User(3, "Третий Иоан Казимирович", "ivy3@dmail.su", 43, LocalDateTime.now().truncatedTo(ChronoUnit.MICROS)));
 
-    public final List<UserDto> testUserDtoList = testUserList.stream()
+    public final List<UserDto> testUserDtoList = TEST_USERSLIST.stream()
             .map(UserDto::new)
             .collect(Collectors.toList());
 
@@ -78,7 +78,7 @@ public class UserControllerTest {
     }
 
     @BeforeAll
-    public static void initialize() {
+    public static void setup() {
         postgreSQLContainer.start();
     }
 
@@ -86,7 +86,7 @@ public class UserControllerTest {
     public void fillDb() throws Exception {
         try (var connection = DriverManager
                 .getConnection(postgreSQLContainer.getJdbcUrl(), postgreSQLContainer.getUsername(), postgreSQLContainer.getPassword())) {
-            for (var user : testUserList) {
+            for (var user : TEST_USERSLIST) {
                 var prStmnt = connection.prepareStatement("INSERT INTO \"user\"(id, name, email, age) VALUES(?, ?, ?, ?)");
                 prStmnt.setInt(1, user.getId());
                 prStmnt.setString(2, user.getName());
@@ -126,9 +126,9 @@ public class UserControllerTest {
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody()
-                .jsonPath("$.name").isEqualTo(expectedDto.getName())
-                .jsonPath("$.email").isEqualTo(expectedDto.getEmail())
-                .jsonPath("$.age").isEqualTo(expectedDto.getAge());
+                .jsonPath("$.name").isEqualTo(expectedDto.name())
+                .jsonPath("$.email").isEqualTo(expectedDto.email())
+                .jsonPath("$.age").isEqualTo(expectedDto.age());
     }
 
     @ParameterizedTest
@@ -139,7 +139,7 @@ public class UserControllerTest {
         webTestClient.post().uri("/api/v1/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .bodyValue(testUserDtoList.get(expectedIndex-1))//testUserDto)
+                .bodyValue(testUserDtoList.get(expectedIndex - 1))//testUserDto)
                 .exchange()
                 .expectStatus().is2xxSuccessful();
 
