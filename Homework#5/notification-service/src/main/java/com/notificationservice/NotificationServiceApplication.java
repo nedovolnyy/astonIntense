@@ -7,14 +7,12 @@ package com.notificationservice;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
-import org.springframework.kafka.annotation.EnableKafka;
 
 /**
  *
  * @author nedo
  */
 @ConfigurationPropertiesScan("com.notificationservice.utils")
-@EnableKafka
 @SpringBootApplication
 public class NotificationServiceApplication {
 

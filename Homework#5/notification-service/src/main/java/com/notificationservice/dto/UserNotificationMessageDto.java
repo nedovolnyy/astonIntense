@@ -10,7 +10,7 @@ import com.notificationservice.utils.enums.OperationType;
  *
  * @author nedo
  */
-public record MessageDto(OperationType operationType,
+public record UserNotificationMessageDto(OperationType operationType,
         String email) {
-    
+
 }

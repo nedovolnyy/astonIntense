@@ -86,7 +86,7 @@ class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(testUserDtoList.get(expectedIndex))))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test

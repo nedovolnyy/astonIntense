@@ -15,9 +15,6 @@ public record KafkaConsumerConfigurationProperties(
         String bootstrapServers,
         String groupId,
         String autoOffsetReset,
-        String listenableTopics,
-        String fromEmail,
-        String createMessage,
-        String deleteMessage) {
+        String listenableTopics) {
 
 }

@@ -126,9 +126,9 @@ ALTER TABLE ONLY public."user" ALTER COLUMN id SET DEFAULT nextval('public.user_
 -- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public."user" VALUES (6, 'Корзинкин Валентин Всеволодович', 'dasda@demail.su', 47, '2025-09-09 11:41:36.665266+03') ON CONFLICT DO NOTHING;
-INSERT INTO public."user" VALUES (7, 'Матарас Тарас Парнасович', 'mataraz@demail.su', 14, '2025-09-09 11:43:53.667167+03') ON CONFLICT DO NOTHING;
-INSERT INTO public."user" VALUES (8, 'Равкин Ыгорь Олегович', 'hjhds@demail.su', 54, '2025-09-09 11:43:53.667167+03') ON CONFLICT DO NOTHING;
+INSERT INTO public."user" VALUES (1, 'Корзинкин Валентин Всеволодович', 'dasda@demail.su', 47, '2025-09-09 11:41:36.665266+03') ON CONFLICT DO NOTHING;
+INSERT INTO public."user" VALUES (2, 'Матарас Тарас Парнасович', 'mataraz@demail.su', 14, '2025-09-09 11:43:53.667167+03') ON CONFLICT DO NOTHING;
+INSERT INTO public."user" VALUES (3, 'Равкин Ыгорь Олегович', 'hjhds@demail.su', 54, '2025-09-09 11:43:53.667167+03') ON CONFLICT DO NOTHING;
 
 
 --

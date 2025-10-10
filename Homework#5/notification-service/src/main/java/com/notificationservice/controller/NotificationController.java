@@ -4,7 +4,7 @@
  */
 package com.notificationservice.controller;
 
-import com.notificationservice.dto.MessageDto;
+import com.notificationservice.dto.UserNotificationMessageDto;
 import com.notificationservice.service.NotificationService;
 import com.notificationservice.utils.enums.OperationType;
 import com.notificationservice.utils.enums.Status;
@@ -30,14 +30,14 @@ public class NotificationController {
 
     @PostMapping(path = "/send-create-message", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> sendCreateMessage(@RequestBody String email) {
-        var messageDto = new MessageDto(OperationType.CREATE, email);
-        return handleServiceResponse(notificationService.sendMessage(messageDto));
+        var userNotificationMessageDto = new UserNotificationMessageDto(OperationType.CREATE, email);
+        return handleServiceResponse(notificationService.sendMessage(userNotificationMessageDto));
     }
 
     @PostMapping(path = "/send-delete-message", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> sendDeleteMessage(@RequestBody String email) {
-        var messageDto = new MessageDto(OperationType.DELETE, email);
-        return handleServiceResponse(notificationService.sendMessage(messageDto));
+        var userNotificationMessageDto = new UserNotificationMessageDto(OperationType.DELETE, email);
+        return handleServiceResponse(notificationService.sendMessage(userNotificationMessageDto));
     }
 
     private ResponseEntity<?> handleServiceResponse(Status code) {

@@ -4,7 +4,7 @@
  */
 package com.notificationservice.consumer;
 
-import com.notificationservice.dto.MessageDto;
+import com.notificationservice.dto.UserNotificationMessageDto;
 import com.notificationservice.service.NotificationService;
 import com.notificationservice.utils.enums.OperationType;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +29,8 @@ public class NotificationKafkaListener {
 
     @KafkaListener(topics = "#{'${spring.kafka.consumer.listenable-topics}'.split(',')}",
             groupId = "${spring.kafka.consumer.group-id}",
-            containerFactory = "messageDtoKafkaListenerContainerFactory")
-    public void listenMessageDtoTopic(MessageDto messageDto,
+            containerFactory = "userNotificationMessageDtoKafkaListenerContainerFactory")
+    public void listenMessageDtoTopic(UserNotificationMessageDto userNotificationMessageDto,
             @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
         OperationType operationType;
         if (topic.equals("user_create")) {
@@ -38,9 +38,9 @@ public class NotificationKafkaListener {
         } else {
             operationType = OperationType.DELETE;
         }
-        var newMessageDto = new MessageDto(operationType, messageDto.email());
-        notificationService.sendMessage(newMessageDto);
-        logger.info(String.format("MessageDto recieved -> %s", newMessageDto));
+        var newUserNotificationMessageDto = new UserNotificationMessageDto(operationType, userNotificationMessageDto.email());
+        notificationService.sendMessage(newUserNotificationMessageDto);
+        logger.info(String.format("Message recieved -> %s", newUserNotificationMessageDto));
     }
 
 }

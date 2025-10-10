@@ -7,14 +7,12 @@ package com.userservice;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
-import org.springframework.kafka.annotation.EnableKafka;
 
 /**
  *
  * @author AKrot
  */
 @ConfigurationPropertiesScan("com.userservice.utils")
-@EnableKafka
 @SpringBootApplication
 public class UserApplication {
 

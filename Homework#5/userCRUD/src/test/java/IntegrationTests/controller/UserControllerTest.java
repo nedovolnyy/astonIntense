@@ -3,6 +3,8 @@ package IntegrationTests.controller;
 import com.userservice.UserApplication;
 import com.userservice.dto.UserDto;
 import com.userservice.entity.User;
+import com.userservice.producer.KafkaProducerConfiguration;
+import com.userservice.producer.MessageDtoKafkaSender;
 import com.userservice.repository.UserRepository;
 import java.sql.DriverManager;
 
@@ -20,8 +22,8 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.boot.web.server.test.LocalServerPort;
 import org.springframework.context.ApplicationContextInitializer;
@@ -29,17 +31,29 @@ import org.springframework.context.ConfigurableApplicationContext;
 import static org.springframework.http.HttpHeaders.ACCEPT;
 import org.springframework.http.MediaType;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 @ContextConfiguration(initializers = {UserControllerTest.Initializer.class})
-@SpringBootTest(classes = UserApplication.class, webEnvironment = WebEnvironment.RANDOM_PORT)
+@EnableAutoConfiguration
+@SpringBootTest(classes = UserApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(
         locations = "classpath:application-integrationtest.properties")
 public class UserControllerTest {
 
+    @MockitoBean
+    KafkaProducerConfiguration kafkaProducerConfiguration;
+    
+    @MockitoBean
+    MessageDtoKafkaSender messageDtoKafkaSender;
+    
+    @MockitoBean
+    KafkaTemplate kafkaTemplate;
+    
     @LocalServerPort
     int localServerPort;
 

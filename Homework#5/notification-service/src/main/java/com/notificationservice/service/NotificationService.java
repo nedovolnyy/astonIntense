@@ -4,7 +4,7 @@
  */
 package com.notificationservice.service;
 
-import com.notificationservice.dto.MessageDto;
+import com.notificationservice.dto.UserNotificationMessageDto;
 import com.notificationservice.utils.enums.Status;
 
 /**
@@ -13,6 +13,6 @@ import com.notificationservice.utils.enums.Status;
  */
 public interface NotificationService {
 
-    Status sendMessage(MessageDto messageDto);
+    Status sendMessage(UserNotificationMessageDto userNotificationMessageDto);
 
 }

@@ -10,11 +10,13 @@ import com.userservice.entity.User;
 import com.userservice.producer.MessageDtoKafkaSender;
 import com.userservice.repository.UserRepository;
 import com.userservice.utils.enums.OperationType;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 /**
@@ -29,9 +31,11 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     final MessageDtoKafkaSender messageDtoKafkaSender;
-    
+
     public UserDto getById(Integer id) {
-        return new UserDto(userRepository.findById(id).orElseThrow());
+        return new UserDto(userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(
+                "Not found user by id = " + id)));
     }
 
     public List<UserDto> getAll() {
@@ -62,7 +66,9 @@ public class UserServiceImpl implements UserService {
 
     public OperationType delete(Integer id) {
         try {
-            var user = userRepository.findById(id).orElseThrow();
+            var user = userRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException(
+                    "Not found user by id = " + id));
             userRepository.delete(user);
             var messageDto = new MessageDto(OperationType.DELETE, user.getEmail());
             messageDtoKafkaSender.sendMessage(OperationType.DELETE, messageDto);

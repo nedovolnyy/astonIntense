@@ -5,7 +5,6 @@
 package com.userservice.dto;
 
 import com.userservice.entity.User;
-import lombok.*;
 
 /**
  *

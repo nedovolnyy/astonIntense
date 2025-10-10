@@ -4,8 +4,7 @@
  */
 package com.notificationservice.service;
 
-import com.notificationservice.dto.MessageDto;
-import com.notificationservice.utils.KafkaConsumerConfigurationProperties;
+import com.notificationservice.dto.UserNotificationMessageDto;
 import com.notificationservice.utils.enums.OperationType;
 import com.notificationservice.utils.enums.Status;
 import lombok.RequiredArgsConstructor;
@@ -22,17 +21,16 @@ import org.springframework.stereotype.Service;
 public class NotificationServiceImpl implements NotificationService {
 
     final MailSender mailSender;
-    final KafkaConsumerConfigurationProperties kafkaConfigurationProperties;
 
-    public Status sendMessage(MessageDto messageDto) {
+    public Status sendMessage(UserNotificationMessageDto userNotificationMessageDto) {
         var mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom(kafkaConfigurationProperties.fromEmail());
-        mailMessage.setTo(messageDto.email());
+        mailMessage.setFrom("admin@userservice.su");
+        mailMessage.setTo(userNotificationMessageDto.email());
         mailMessage.setSubject("Account notification");
-        if (messageDto.operationType() == OperationType.CREATE) {
-            mailMessage.setText(kafkaConfigurationProperties.createMessage());
+        if (userNotificationMessageDto.operationType() == OperationType.CREATE) {
+            mailMessage.setText("Здравствуйте! Ваш аккаунт на сайте ваш сайт был успешно создан.");
         } else {
-            mailMessage.setText(kafkaConfigurationProperties.deleteMessage());
+            mailMessage.setText("Здравствуйте! Ваш аккаунт был удалён.");
         }
         try {
             mailSender.send(mailMessage);

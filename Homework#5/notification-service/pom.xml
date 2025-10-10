@@ -13,11 +13,10 @@
     <name>Notification-service</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>21</maven.compiler.source> 
-        <maven.compiler.target>21</maven.compiler.target> 
-        <maven.compiler.release>21</maven.compiler.release>
+        <maven.compiler.source>25</maven.compiler.source> 
+        <maven.compiler.target>25</maven.compiler.target> 
+        <maven.compiler.release>25</maven.compiler.release>
         <exec.mainClass>com.notificationservice.NotificationServiceApplication</exec.mainClass>
-        <junit.jupiter.version>5.13.4</junit.jupiter.version>
     </properties>
     
     <dependencies>
@@ -48,19 +47,13 @@
             <scope>test</scope> 
         </dependency>
         <dependency>
-            <groupId>org.springframework.kafka</groupId> 
-            <artifactId>spring-kafka-test</artifactId> 
-            <scope>test</scope> 
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-restclient</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId> 
             <artifactId>junit-jupiter</artifactId> 
-            <scope>test</scope> 
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId> 
-            <artifactId>kafka</artifactId> 
-            <version>1.21.3</version> 
             <scope>test</scope> 
         </dependency>
     </dependencies>

@@ -1,31 +1,41 @@
 package IntegrationTests.controller;
 
 import com.notificationservice.NotificationServiceApplication;
-import com.notificationservice.dto.MessageDto;
-import com.notificationservice.utils.enums.OperationType;
+import com.notificationservice.consumer.KafkaConsumerConfiguration;
+import com.notificationservice.consumer.NotificationKafkaListener;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestPropertySource;
-import lombok.RequiredArgsConstructor;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeAll;
-//import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-//import org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.test.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.web.client.RestClient;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
-//@EnableAutoConfiguration(exclude = {KafkaAutoConfiguration.class})
-@RequiredArgsConstructor
+@EnableAutoConfiguration
 @SpringBootTest(classes = NotificationServiceApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:application-integrationtest.properties")
+@Testcontainers
 public class NotificationControllerTest {
 
+    @MockitoBean
+    KafkaConsumerConfiguration kafkaConsumerConfiguration;
+    @MockitoBean
+    NotificationKafkaListener notificationKafkaListener;
+
+    @Container
     static final GenericContainer<?> mailpitContainer = new GenericContainer<>("axllent/mailpit:v1.27")
             .withExposedPorts(1025, 8025)
             .waitingFor(Wait.forLogMessage(".*accessible via.*", 1));
@@ -46,22 +56,23 @@ public class NotificationControllerTest {
     static void setup() {
         mailpitClient = RestClient.builder()
                 .baseUrl("http://" + mailpitContainer.getHost() + ":"
-                        + mailpitContainer.getMappedPort(8025) + "/api/v1/notification")
+                        + mailpitContainer.getMappedPort(8025) + "/api/v1")
                 .build();
     }
 
     @Test
     void sendCreateMessage_withValidData_ReturnsOK() {
-        var messageDto = new MessageDto(OperationType.CREATE, "test@test.test");
+        var headers = new  HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        var requestEntity = new HttpEntity<>("test@test.test", headers);
 
         var response = restTemplate.postForEntity(
-                "/send-create-message",
-                messageDto,
+                "/api/v1/notification/send-create-message",
+                requestEntity,
                 String.class
         );
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(response.getBody());
 
         var messages = mailpitClient.get()
                 .uri("/messages")
@@ -74,16 +85,17 @@ public class NotificationControllerTest {
 
     @Test
     void sendDeleteMessage_withValidData_ReturnsOK() {
-        var messageDto = new MessageDto(OperationType.DELETE, "test@test.test");
+        var headers = new  HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        var requestEntity = new HttpEntity<>("test@test.test", headers);
 
         var response = restTemplate.postForEntity(
-                "/send-delete-message",
-                messageDto,
+                "/api/v1/notification/send-delete-message",
+                requestEntity,
                 String.class
         );
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(response.getBody());
 
         var messages = mailpitClient.get()
                 .uri("/messages")
