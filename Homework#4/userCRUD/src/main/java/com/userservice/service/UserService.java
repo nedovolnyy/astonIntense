@@ -5,7 +5,7 @@
 package com.userservice.service;
 
 import com.userservice.dto.UserDto;
-import com.userservice.utils.enums.Operation;
+import com.userservice.utils.enums.OperationType;
 import java.util.List;
 
 /**
@@ -18,10 +18,10 @@ public interface UserService {
 
     List<UserDto> getAll();
 
-    Operation save(UserDto userDto);
+    OperationType save(UserDto userDto);
 
-    Operation update(UserDto userDto, Integer id);
+    OperationType update(UserDto userDto, Integer id);
 
-    Operation delete(Integer id);
+    OperationType delete(Integer id);
 
 }

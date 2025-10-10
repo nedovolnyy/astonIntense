@@ -7,10 +7,12 @@ package com.userservice.service;
 import com.userservice.dto.UserDto;
 import com.userservice.entity.User;
 import com.userservice.repository.UserRepository;
-import com.userservice.utils.enums.Operation;
+import com.userservice.utils.enums.OperationType;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
  *
  * @author AKrot
  */
+@RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -25,7 +28,9 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     public UserDto getById(Integer id) {
-        return new UserDto(userRepository.findById(id).orElseThrow());
+        return new UserDto(userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(
+                "Not found user by id = " + id)));
     }
 
     public List<UserDto> getAll() {
@@ -34,30 +39,35 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
-    public Operation save(UserDto userDto) {
+    public OperationType save(UserDto userDto) {
         try {
             userRepository.save(userDto.toUser());
-            return Operation.INSERT;
+            return OperationType.CREATE;
         } catch (Exception e) {
-            return Operation.ERROR;
+            return OperationType.ERROR;
         }
     }
 
-    public Operation update(UserDto userDto, Integer id) {
+    public OperationType update(UserDto userDto, Integer id) {
         try {
             userRepository.save(new User(id, userDto.name(), userDto.email(), userDto.age()));
-            return Operation.UPDATE;
+            return OperationType.UPDATE;
         } catch (Exception e) {
-            return Operation.ERROR;
+            return OperationType.ERROR;
         }
     }
 
-    public Operation delete(Integer id) {
+    public OperationType delete(Integer id) {
+    	if (!userRepository.existsById(id)){
+    		throw new EntityNotFoundException(
+                    "Not found user by id = " + id);
+    	};
+    	
         try {
             userRepository.deleteById(id);
-            return Operation.DELETE;
+            return OperationType.DELETE;
         } catch (Exception e) {
-            return Operation.ERROR;
+            return OperationType.ERROR;
         }
     }
 }
