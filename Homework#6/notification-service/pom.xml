@@ -7,21 +7,18 @@
         <version>4.0.0-M3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.userservice</groupId>
-    <artifactId>userCRUD</artifactId>
+    <groupId>com</groupId>
+    <artifactId>notification-service</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>userCRUD</name>
-    <packaging>jar</packaging>
-    <repositories>
-    </repositories>
+    <name>Notification-service</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>25</maven.compiler.source> 
         <maven.compiler.target>25</maven.compiler.target> 
         <maven.compiler.release>25</maven.compiler.release>
-        <exec.mainClass>com.userservice.UserApplication</exec.mainClass>
+        <exec.mainClass>com.notificationservice.NotificationServiceApplication</exec.mainClass>
     </properties>
-
+    
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -32,30 +29,12 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <groupId>org.springframework.boot</groupId> 
+            <artifactId>spring-boot-starter-mail</artifactId> 
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-hibernate</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
+            <groupId>org.springframework.kafka</groupId> 
+            <artifactId>spring-kafka</artifactId> 
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -63,19 +42,19 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
+            <groupId>org.springframework.boot</groupId> 
+            <artifactId>spring-boot-starter-test</artifactId> 
+            <scope>test</scope> 
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-restclient</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>test</scope>
+            <groupId>org.testcontainers</groupId> 
+            <artifactId>junit-jupiter</artifactId> 
+            <scope>test</scope> 
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
@@ -108,8 +87,21 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
-                    <mainClass>com.userservice.UserApplication</mainClass>
-                    <executable>true</executable>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>com.notificationservice.NotificationServiceApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>

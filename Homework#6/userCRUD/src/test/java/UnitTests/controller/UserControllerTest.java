@@ -35,7 +35,7 @@ class UserControllerTest {
 
     @MockitoBean
     private UserService userService;
-    
+
     @Autowired
     private MockMvc mockMvc;
 

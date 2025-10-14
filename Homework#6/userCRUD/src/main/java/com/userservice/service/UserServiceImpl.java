@@ -4,8 +4,10 @@
  */
 package com.userservice.service;
 
+import com.userservice.dto.MessageDto;
 import com.userservice.dto.UserDto;
 import com.userservice.entity.User;
+import com.userservice.producer.MessageDtoKafkaSender;
 import com.userservice.repository.UserRepository;
 import com.userservice.utils.enums.OperationType;
 import jakarta.persistence.EntityNotFoundException;
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,6 +29,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    final MessageDtoKafkaSender messageDtoKafkaSender;
 
     public UserDto getById(Integer id) {
         return new UserDto(userRepository.findById(id)
@@ -42,6 +47,8 @@ public class UserServiceImpl implements UserService {
     public OperationType save(UserDto userDto) {
         try {
             userRepository.save(userDto.toUser());
+            var messageDto = new MessageDto(OperationType.CREATE, userDto.email());
+            messageDtoKafkaSender.sendMessage(OperationType.CREATE, messageDto);
             return OperationType.CREATE;
         } catch (Exception e) {
             return OperationType.ERROR;
@@ -58,13 +65,13 @@ public class UserServiceImpl implements UserService {
     }
 
     public OperationType delete(Integer id) {
-    	if (!userRepository.existsById(id)){
-    		throw new EntityNotFoundException(
-                    "Not found user by id = " + id);
-    	};
-    	
         try {
-            userRepository.deleteById(id);
+            var user = userRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException(
+                    "Not found user by id = " + id));
+            userRepository.delete(user);
+            var messageDto = new MessageDto(OperationType.DELETE, user.getEmail());
+            messageDtoKafkaSender.sendMessage(OperationType.DELETE, messageDto);
             return OperationType.DELETE;
         } catch (Exception e) {
             return OperationType.ERROR;

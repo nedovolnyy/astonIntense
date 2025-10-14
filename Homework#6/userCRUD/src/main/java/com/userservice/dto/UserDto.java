@@ -5,12 +5,20 @@
 package com.userservice.dto;
 
 import com.userservice.entity.User;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  *
  * @author nedo
  */
-public record UserDto(String name, String email, int age) {
+@Schema(description = "User")
+public record UserDto(
+        @Schema(description = "User's name", example = "Siarhei")
+        String name,
+        @Schema(description = "User's email", example = "mail@smail.su")
+        String email,
+        @Schema(description = "User's age")
+        int age) {
 
     public UserDto(User user) {
         this(user.getName(), user.getEmail(), user.getAge());
