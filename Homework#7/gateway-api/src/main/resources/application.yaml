@@ -1,0 +1,37 @@
+eureka:
+    client:
+        service-url:
+            defaultZone: http://localhost:8761/eureka
+    instance:
+        prefer-ip-address: true
+resilience4j:
+    circuitbreaker:
+        configs:
+            default:
+                failureRateThreshold: 50
+                permittedNumberOfCallsInHalfOpenState: 3
+                slidingWindowSize: 10
+                waitDurationInOpenState: 10s
+server:
+    port: 8083
+spring:
+    application:
+        name: gatewayapi
+    cloud:
+        gateway:
+            discovery:
+                locator:
+                    enabled: true
+                    lower-case-service-id: true
+            routes:
+            -   filters:
+                - RewritePath=/api/v1/users/(?<segment>.*), /user-service/${segment}
+                - CircuitBreaker=userServiceCircuitBreaker
+                id: userservice
+                predicates:
+                - Path=/api/v1/users/**
+                uri: lb://user-service
+    config:
+        import: optional:configserver:http://localhost:8071
+    profiles:
+        active: dev
