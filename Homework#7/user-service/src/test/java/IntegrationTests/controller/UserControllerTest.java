@@ -1,6 +1,6 @@
 package IntegrationTests.controller;
 
-import com.userservice.UserApplication;
+import com.userservice.UserServiceApplication;
 import com.userservice.dto.UserDto;
 import com.userservice.entity.User;
 import com.userservice.producer.KafkaProducerConfiguration;
@@ -40,7 +40,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 
 @ContextConfiguration(initializers = {UserControllerTest.Initializer.class})
 @EnableAutoConfiguration
-@SpringBootTest(classes = UserApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = UserServiceApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(
         locations = "classpath:application-integrationtest.properties")
 public class UserControllerTest {

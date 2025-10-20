@@ -7,8 +7,8 @@
         <version>4.0.0-M3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.userservice</groupId>
-    <artifactId>user-service</artifactId>
+    <groupId>com</groupId>
+    <artifactId>userservice</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>user-service</name>
     <description>userCRUD</description>
@@ -17,10 +17,9 @@
     </repositories>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>25</maven.compiler.source> 
-        <maven.compiler.target>25</maven.compiler.target> 
         <maven.compiler.release>25</maven.compiler.release>
-        <exec.mainClass>com.userservice.UserApplication</exec.mainClass>
+        <spring-cloud.version>2025.1.0-M4</spring-cloud.version>
+        <exec.mainClass>com.userservice.UserServiceApplication</exec.mainClass>
     </properties>
 
     <dependencies>
@@ -43,6 +42,19 @@
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId> 
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId> 
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -84,6 +96,17 @@
             <version>3.0.0-M1</version>
         </dependency>
     </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     
     <build>
         <plugins>
@@ -109,7 +132,7 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
-                    <mainClass>com.userservice.UserApplication</mainClass>
+                    <mainClass>com.userservice.UserServiceApplication</mainClass>
                     <executable>true</executable>
                 </configuration>
             </plugin>

@@ -1,6 +1,6 @@
 package UnitTests.controller;
 
-import com.userservice.UserApplication;
+import com.userservice.UserServiceApplication;
 import com.userservice.controller.UserController;
 import com.userservice.dto.UserDto;
 import com.userservice.entity.User;
@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import tools.jackson.databind.ObjectMapper;
 
 @WebMvcTest(UserController.class)
-@ContextConfiguration(classes = UserApplication.class)
+@ContextConfiguration(classes = UserServiceApplication.class)
 class UserControllerTest {
 
     @MockitoBean

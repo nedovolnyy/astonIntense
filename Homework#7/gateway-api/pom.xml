@@ -7,7 +7,7 @@
         <version>4.0.0-M3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.gatewayapi</groupId>
+    <groupId>com</groupId>
     <artifactId>gatewayapi</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>gateway-api</name>
@@ -29,9 +29,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-gateway-dependencies</artifactId>
-            <version>5.0.0-M4</version>
-            <type>pom</type>
+            <artifactId>spring-cloud-starter-gateway-server-webflux</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId> 
