@@ -1,0 +1,13 @@
+server:
+    port: 8071
+spring:
+    application:
+        name: config-server
+    cloud:
+        config:
+            server:
+                native:
+                    searchLocations: file:../configs
+                    addLabelLocations: false
+    profiles:
+        active: native

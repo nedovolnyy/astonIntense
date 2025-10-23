@@ -1,0 +1,62 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
+    ipAddr: 127.0.0.1
+    prefer-ip-address: true
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.http.server.reactive: DEBUG
+    org.springframework.web.reactive: DEBUG
+    reactor.ipc.netty: DEBUG
+    reactor.netty: DEBUG
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+    instances:
+      userServiceCircuitBreaker:
+        base-config: default
+server:
+    port: 8083
+spring:
+  cloud:
+    config:
+      fail-fast: true
+      retry:
+        max-attempts: 6
+    client:
+      hostname: localhost
+    gateway.server.webflux:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: user-service
+          uri: lb://USER-SERVICE/
+          predicates:
+            - Path=/api/v1/users/**
+          filters:
+            - RewritePath=/api/v1/users/?(?<segment>.*), /$\{segment}
+            - name: CircuitBreaker
+              args:
+                name: userServiceCircuitBreaker
+                fallbackUri: forward:/fallback/user-service
+        - id: notification-service
+          uri: lb://NOTIFICATION-SERVICE/
+          predicates:
+            - Path=/api/v1/notification/**
+          filters:
+            - RewritePath=/api/v1/users/?(?<segment>.*), /$\{segment}
+            - name: CircuitBreaker
+              args:
+                name: notificationServiceCircuitBreaker
+                fallbackUri: forward:/fallback/notification-service
