@@ -1,0 +1,47 @@
+eureka:
+    client:
+        service-url:
+            defaultZone: http://localhost:8761/eureka
+    instance:
+        hostname: localhost
+        ipAddr: 127.0.0.1
+        prefer-ip-address: true
+logging:
+    file:
+        name: logs/log.log
+    level:
+        com:
+            notificationservice: trace
+        org:
+            springframework: 'OFF'
+        web: 'OFF'
+    logback:
+        rollingpolicy:
+            clean-history-on-start: true
+server:
+    port: 8081
+spring:
+    cloud:
+        client:
+            hostname: localhost
+    kafka:
+        consumer:
+            auto-offset-reset: earliest
+            bootstrap-servers: localhost:9092
+            group-id: consumer-notification-user-group
+            listenable-topics: user_create,user_delete
+    mail:
+        host: localhost
+        port: 1025
+        properties:
+            mail:
+                smtp:
+                    auth: false
+                    starttls:
+                        enable: false
+springdoc:
+    api-docs:
+        enabled: true
+        path: /api-docs
+    swagger-ui:
+        path: /swagger-ui.html
