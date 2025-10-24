@@ -1,0 +1,59 @@
+eureka:
+    client:
+        service-url:
+            defaultZone: http://localhost:8761/eureka
+    instance:
+        hostname: localhost
+        ipAddr: 127.0.0.1
+        prefer-ip-address: true
+logging:
+    file:
+        name: logs/log.log
+    level:
+        com:
+            userservice: trace
+        org:
+            springframework: 'OFF'
+        sql: 'OFF'
+        web: 'OFF'
+    logback:
+        rollingpolicy:
+            clean-history-on-start: true
+server:
+    port: 8080
+spring:
+    cloud:
+        client:
+            hostname: localhost
+    data:
+        jpa:
+            repositories:
+                enabled: true
+    datasource:
+        driver-class-name: org.postgresql.Driver
+        password: password
+        url: jdbc:postgresql://localhost:5432/userDB
+        username: postgres
+    jpa:
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+                format_sql: true
+        show-sql: true
+    kafka:
+        producer:
+            acks: all
+            bootstrap-servers: localhost:9092
+            create-topic: user_create
+            delete-topic: user_delete
+    sql:
+        init:
+            mode: always
+springdoc:
+    api-docs:
+        enabled: true
+        path: /api-docs
+    swagger-ui:
+        path: /swagger-ui.html

@@ -1,0 +1,43 @@
+eureka:
+    client:
+        service-url:
+            defaultZone: http://eureka-server:8761/eureka
+    instance:
+        hostname: eureka-server
+        prefer-ip-address: false
+server:
+    port: 8080
+spring:
+    cloud:
+        client:
+            hostname: user-service
+    data:
+        jpa:
+            repositories:
+                enabled: true
+    datasource:
+        driver-class-name: org.postgresql.Driver
+        password: password
+        username: postgres
+    jpa:
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                format_sql: true
+        show-sql: true
+    kafka:
+        producer:
+            acks: all
+            bootstrap-servers: kafka:9092
+            create-topic: user_create
+            delete-topic: user_delete
+    sql:
+        init:
+            mode: always
+springdoc:
+    api-docs:
+        enabled: true
+        path: /api-docs
+    swagger-ui:
+        path: /swagger-ui.html
