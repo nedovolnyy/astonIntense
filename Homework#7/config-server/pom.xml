@@ -19,7 +19,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>25</java.version>
         <spring-cloud.version>2025.1.0-M4</spring-cloud.version>
-        <exec.mainClass>com.configserver.EurekaServerApplication</exec.mainClass>
+        <exec.mainClass>com.configserver.ConfigServerApplication</exec.mainClass>
         <maven.compiler.release>25</maven.compiler.release>
     </properties>
     <dependencies>
@@ -70,7 +70,7 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
-                    <mainClass>com.configserver.EurekaServerApplication</mainClass>
+                    <mainClass>com.configserver.ConfigServerApplication</mainClass>
                     <executable>true</executable>
                 </configuration>
             </plugin>
